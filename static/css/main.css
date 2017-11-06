@@ -1,0 +1,15 @@
+div#upload-gui {
+    float: left;
+    width: 50%; 
+    align-content: center;
+    text-align: center;
+}
+  
+div#output-gui {
+    height: 100%;
+    text-align: center;
+    border-left: 2px solid silver;
+    float: right;
+    width: 50%;
+    align-content: center;
+}  
