@@ -1,4 +1,5 @@
 div#upload-gui {
+    height: 100%;
     float: left;
     width: 50%; 
     align-content: center;
