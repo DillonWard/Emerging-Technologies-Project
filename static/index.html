@@ -58,7 +58,9 @@
 
             <div id="upload-gui">
               <p class = "lead">Upload Image</p>
-              <input type="file">
+              <input type='file' onchange='uploadImage(this);' />
+              <img id="img" src="#" alt="your image" />
+              
             </div>            
              
             <div id="output-gui">
@@ -106,5 +108,6 @@
     <!-- Custom JavaScript for this theme -->
     <script src="static/js/scrolling-nav.js"></script>
 
+    <script src="static/js/controller.js"></script>
   </body>
 </html>
