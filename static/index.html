@@ -58,9 +58,21 @@
 
             <div id="upload-gui">
               <p class = "lead">Upload Image</p>
-              <input type='file' onchange='uploadImage(this);' />
-              <img id="img" src="#" alt="your image" />
-              
+
+              <div class = "tab">
+                <button class="tablinks" onclick="openTab(event, 'upload-img')">Upload</button>
+                <button class="tablinks" onclick="openTab(event, 'draw-img')">Draw</button>
+              </div>
+
+              <div id = "upload-img">
+                  <input type='file' onchange='uploadImage(this);' />
+                  <img id="img" src="#" alt="your image" />
+              </div>
+
+              <div id = "draw-img">
+
+              </div>
+
             </div>            
              
             <div id="output-gui">
