@@ -11,8 +11,7 @@
       <link href="static/css/main.css" rel="stylesheet" type="text/css">
       <link href="static/css/scrolling-nav.css" rel="stylesheet">
    </head>
-
-   <body id="page-top">
+   <body id="page-top" onload="init()">
       <!-- Navigation -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
          <div class="container">
@@ -32,14 +31,12 @@
             </div>
          </div>
       </nav>
-
       <header class="bg-primary text-white">
          <div class="container text-center">
             <h1>Emerging Technologies Project</h1>
             <p class="lead">A Single-Page web application that recognises digits in images using Tensorflow and Flask. </p>
          </div>
       </header>
-
       <section id="converter" class="bg-light">
          <div class="container">
             <div class="row">
@@ -53,25 +50,21 @@
                      </div>
                      <div id = "draw" class = "tabcontent">
                         <p class = "lead">Draw Image</p>
-                        
-                        <canvas id="drawingCanvas" style="border:1px solid black;background-color:white;"></canvas>
-                        
-                        
+                        <canvas id="can" width="300" height="150"></canvas>
+                        <br>
+                        <button onclick="erase()">Erase</button>
                      </div>
-                     <button class="tablink" onclick="openTab('upload', this, 'grey')" id="defaultOpen">Upload</button>
-                     <button class="tablink" onclick="openTab('draw', this, 'grey')">Draw</button>
+                     <button class="tablink" onclick="openTab('upload', this, '#969696')" id="defaultOpen">Upload</button>
+                     <button class="tablink" onclick="openTab('draw', this, '#77777')" id="draw-btn">Draw</button>
                   </div>
-
-                  <div id="output-gui" class="tabcontent">
+                  <div id="output-gui">
                      <p class = "lead">Output</p>
                   </div>
-
                </div>
             </div>
          </div>
          </div>
       </section>
-
       <section id="about">
          <div class="container">
             <div class="row">
@@ -87,7 +80,6 @@
             </div>
          </div>
       </section>
-
       <!-- Footer -->
       <footer class="py-5 bg-dark">
          <div class="container">
