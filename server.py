@@ -4,7 +4,6 @@ import re, base64
 import numpy as np
 from scipy.misc import imread, imresize
 
-
 app = Flask(__name__)
 
 @app.route('/')
@@ -18,7 +17,6 @@ def uploadImage():
     data = request.get_data()
     # use regular expressions to remove what we don't need from what's being read in
     img = re.search(b'base64,(.*)', data).group(1)
-    # print(base64.b64decode(img))
 
     # the image is decoded using base64 and saved
     with open('./images/uploaded-img.png','wb') as fh:
@@ -27,9 +25,17 @@ def uploadImage():
     img_bytes = imread('./images/uploaded-img.png', mode ='L')
     img = np.invert(img_bytes)
     img_bytes = imresize(img_bytes, (28,28))
-    img_bytes = img_bytes.reshape(1, 28, 28, 1)
 
-    print(img_bytes)
+    for i in img_bytes:
+        for j in i:
+            if (j <= 127):
+                print('.', end='')
+
+            else:
+                print ('#', end='')
+        print()
+
+
     return 'Uploaded'
 
 if __name__ == '__main__':
