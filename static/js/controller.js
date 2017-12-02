@@ -15,6 +15,7 @@ function uploadImage(input) {
         };
         reader.readAsDataURL(input.files[0]);
     }
+    // saveImage();
 }
 
 
@@ -40,7 +41,9 @@ function openTab(tabName, elmnt, color) {
     elmnt.style.backgroundColor = color;
 }
 
-var canvas, context, tool;
+
+// context = canvas.fillRect(255,255,255)
+
 
 // Get the element with id="defaultOpen" and click on it - (3)
 document.getElementById("defaultOpen").click();
@@ -48,12 +51,19 @@ document.getElementById("defaultOpen").click();
 // Function for creating a canvas and allowing the user to draw/erase - (3)
 if (window.addEventListener) {
 
+    var canvas, context, tool;
+    
 
     window.addEventListener('load', function () {
 
         function init() {
             // Find the canvas element.
             canvas = document.getElementById('imageView');
+            context = canvas.getContext('2d');
+            context.fillStyle="#FFFFFF";
+            context.fillRect(0, 0, 320, 200)
+
+
             if (!canvas) {
                 alert('Error: I cannot find the canvas element!');
                 return;
@@ -65,7 +75,6 @@ if (window.addEventListener) {
             }
 
             // Get the 2D canvas context.
-            context = canvas.getContext('2d');
             if (!context) {
                 alert('Error: failed to getContext!');
                 return;
@@ -142,9 +151,11 @@ if (window.addEventListener) {
 }
 
 document.getElementById('clear').addEventListener('click', function () {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-}, false);
+    context.fillStyle="#FFFFFF";
+    context.fillRect(0, 0, 320, 200)
 
+    
+}, false);
 
 function saveDrawing() {
 
@@ -156,12 +167,29 @@ function saveDrawing() {
         url: '/upload',
         method: 'POST',
         data: img,
-        success: function(res){        
+        success: function (res) {
             console.log(res);
-            
-            
-        },error: function(err){ 
+        }, error: function (err) {
             console.log(err);
         }
-    });    
+    });
 }
+
+// function saveImage() {
+
+//     var img = document.getElementById("img").getAttribute("src");
+//     console.log(img);
+
+
+//     // $.ajax({
+//     //     url: '/upload',
+//     //     method: 'POST',
+//     //     data: img,
+//     //     success: function (res) {
+//     //         console.log(res);
+//     //     }, error: function (err) {
+//     //         console.log(err);
+//     //     }
+//     // });
+
+// }
