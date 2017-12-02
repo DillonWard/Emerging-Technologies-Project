@@ -1,4 +1,3 @@
-# (1) Adapted from - https://stackoverflow.com/questions/25045373/use-regex-re-sub-to-remove-everything-before-and-including-a-specified-word
 import flask
 from flask import Flask, request
 import re, base64
@@ -14,10 +13,10 @@ def home():
 
 def uploadImage():
     data = request.get_data()
-    # use regular expressions to remove or everything before a specific character - (1)
+    # use regular expressions to remove what we don't need from what's being read in
     img = re.search(b'base64,(.*)', data).group(1)
 
-
+    # the image is decoded using base64 and saved
     with open('./images/uploaded-img.png','wb') as fh:
         fh.write(base64.b64decode(img))
 
