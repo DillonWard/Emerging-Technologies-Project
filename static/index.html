@@ -1,99 +1,120 @@
 <!-- Adapted from https://startbootstrap.com/template-overviescrolling-n -->
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <title>Emerging Technologies Projectitle</title>
-      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <link href="static/css/main.css" rel="stylesheet" type="text/css">
-      <link href="static/css/scrolling-nav.css" rel="stylesheet">
-   </head>
-   <body id="page-top" onload="init()">
-      <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-         <div class="container">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Emerging Technologies Projectitle</title>
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/main.css" rel="stylesheet" type="text/css">
+    <link href="static/css/scrolling-nav.css" rel="stylesheet">
+</head>
+
+<body id="page-top" >
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">Emerging Technologies Project</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-               <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                     <a class="nav-link js-scroll-trigger" href="#converter">Converter</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link js-scroll-trigger" href="#about">About</a>                
-                  </li>
-               </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#converter">Converter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                    </li>
+                </ul>
             </div>
-         </div>
-      </nav>
-      <header class="bg-primary text-white">
-         <div class="container text-center">
+        </div>
+    </nav>
+    <header class="bg-primary text-white">
+        <div class="container text-center">
             <h1>Emerging Technologies Project</h1>
             <p class="lead">A Single-Page web application that recognises digits in images using Tensorflow and Flask. </p>
-         </div>
-      </header>
-      <section id="converter" class="bg-light">
-         <div class="container">
+        </div>
+    </header>
+    <section id="converter" class="bg-light">
+        <div class="container">
             <div class="row">
-               <div class="col-lg-8 mx-auto">
-                  <h2>Converter</h2>
-                  <div id="input-gui">
-                     <div id = "upload" class = "tabcontent">
-                        <p class = "lead">Upload Image</p>
-                        <input type='file' onchange='uploadImage(this);' />
-                        <img id="img" src="#" />
-                     </div>
-                     <div id = "draw" class = "tabcontent">
-                        <p class = "lead">Draw Image</p>
-                        <canvas id="can" width="300" height="150"></canvas>
+                <div class="col-lg-8 mx-auto">
+                    <h2>Converter</h2>
+                    <div id="input-gui">
+                        <div id="upload" class="tabcontent">
+                            <p class="lead">Upload Image</p>
+                            <input type='file' onchange='uploadImage(this);' />
+                        </div>
+                        <div id="draw" class="tabcontent">
+                            <p class="lead">Draw Image</p>
+                            <canvas id="imageView" width="300" height="200">
+                                <p>Unfortunately, your browser is currently unsupported by our web application. We are sorry
+                                    for the inconvenience. Please use one of the supported browsers listed below, or draw
+                                    the image you want using an offline tool.</p>
+                                <p>Supported browsers:
+                                    <a href="http://www.opera.com">Opera</a>,
+                                    <a href="http://www.mozilla.com">Firefox</a>,
+                                    <a href="http://www.apple.com/safari">Safari</a>, and
+                                    <a href="http://www.konqueror.org">Konqueror</a>.</p>
+                            </canvas>
+                            <br>
+                            <button id="clear">Erase</button>
+                            <button onclick="saveDrawing()">Submit</button>
+                        </div>
                         <br>
-                        <button onclick="erase()">Erase</button>
-                     </div>
-                     <button class="tablink" onclick="openTab('upload', this, '#969696')" id="defaultOpen">Upload</button>
-                     <button class="tablink" onclick="openTab('draw', this, '#77777')" id="draw-btn">Draw</button>
-                  </div>
-                  <div id="output-gui">
+                        <br>
+                        <br>
+                        <br>
+                        <button class="tablink" onclick="openTab('upload', this, '#969696')" id="defaultOpen">Upload</button>
+                        <button class="tablink" onclick="openTab('draw', this, '#77777')" id="draw-btn">Draw</button>
+                    </div>
+                    <div id="output-gui">
                      <p class = "lead">Output</p>
+                     <img id="img" src="#" />
+                     
                   </div>
-               </div>
+                </div>
             </div>
-         </div>
-         </div>
-      </section>
-      <section id="about">
-         <div class="container">
+        </div>
+        </div>
+    </section>
+    <section id="about">
+        <div class="container">
             <div class="row">
-               <div class="col-lg-8 mx-auto">
-                  <h2>Project Description</h2>
-                  <p class="lead">This is a Single-Page web application that, using <a href="https://www.tensorflow.org/">Tensorflow</a> and <a href="http://flask.pocoo.org/">Flask</a>, will return to the user a digit contained in an image. This project will:</p>
-                  <ul>
-                     <li>Allow the user to create requests by submitting images to the application</li>
-                     <li>The application will respond to the user by returning the digit inside the image</li>
-                     <li>Connect the HTML page to the route using AJAX</li>
-                  </ul>
-               </div>
+                <div class="col-lg-8 mx-auto">
+                    <h2>Project Description</h2>
+                    <p class="lead">This is a Single-Page web application that, using
+                        <a href="https://www.tensorflow.org/">Tensorflow</a> and
+                        <a href="http://flask.pocoo.org/">Flask</a>, will return to the user a digit contained in an image. This project will:</p>
+                    <ul>
+                        <li>Allow the user to create requests by submitting images to the application</li>
+                        <li>The application will respond to the user by returning the digit inside the image</li>
+                        <li>Connect the HTML page to the route using AJAX</li>
+                    </ul>
+                </div>
             </div>
-         </div>
-      </section>
-      <!-- Footer -->
-      <footer class="py-5 bg-dark">
-         <div class="container">
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
             <p class="m-0 text-center text-white">Dillon Ward - G00326756 - Dillonward2017@gmail.com</p>
-         </div>
-         <!-- /.container -->
-      </footer>
-      <!-- Bootstrap core JavaScript -->
-      <script src="static/vendor/jquery/jquery.min.js"></script>
-      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- Plugin JavaScript -->
-      <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
-      <!-- Custom JavaScript for this theme -->
-      <script src="static/js/scrolling-nav.js"></script>
-      <script src="static/js/controller.js"></script>
-   </body>
+        </div>
+        <!-- /.container -->
+    </footer>
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom JavaScript for this theme -->
+    <script src="static/js/scrolling-nav.js"></script>
+    <script src="static/js/controller.js"></script>
+</body>
+
 </html>

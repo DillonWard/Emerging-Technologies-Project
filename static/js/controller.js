@@ -1,6 +1,6 @@
 // (1) Adapted from - https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
 // (2) Adapted from - https://www.w3schools.com/howto/howto_js_tab_header.asp
-// (3) Adapted from - https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
+// (3) Adapted from - https://dev.opera.com/articles/html5-canvas-painting/example-2.html
 
 // Function for selecting and uploading a file to the web page - (1)
 function uploadImage(input) {
@@ -16,6 +16,7 @@ function uploadImage(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
 
 // Function for tab views (2)
 function openTab(tabName, elmnt, color) {
@@ -39,85 +40,127 @@ function openTab(tabName, elmnt, color) {
     elmnt.style.backgroundColor = color;
 }
 
-// Get the element with id="defaultOpen" and click on it
+var canvas, context, tool;
+
+// Get the element with id="defaultOpen" and click on it - (3)
 document.getElementById("defaultOpen").click();
 
-// Function for creating a canvas and allowing the user to draw/erase
-var canvas, ctx, flag = false,
-prevX = 0,
-currX = 0,
-prevY = 0,
-currY = 0,
-dot_flag = false;
+// Function for creating a canvas and allowing the user to draw/erase - (3)
+if (window.addEventListener) {
 
-var x = "black",
-y = 2;
 
-function init() {
-canvas = document.getElementById('can');
-ctx = canvas.getContext("2d");
-w = canvas.width;
-h = canvas.height;
+    window.addEventListener('load', function () {
 
-canvas.addEventListener("mousemove", function(e) {
-    findxy('move', e)
+        function init() {
+            // Find the canvas element.
+            canvas = document.getElementById('imageView');
+            if (!canvas) {
+                alert('Error: I cannot find the canvas element!');
+                return;
+            }
+
+            if (!canvas.getContext) {
+                alert('Error: no canvas.getContext!');
+                return;
+            }
+
+            // Get the 2D canvas context.
+            context = canvas.getContext('2d');
+            if (!context) {
+                alert('Error: failed to getContext!');
+                return;
+            }
+
+            // Pencil tool instance.
+            tool = new tool_pencil();
+
+
+
+            // Attach the mousedown, mousemove and mouseup event listeners.
+            canvas.addEventListener('mousedown', ev_canvas, false);
+            canvas.addEventListener('mousemove', ev_canvas, false);
+            canvas.addEventListener('mouseup', ev_canvas, false);
+
+        }
+
+        // This painting tool works like a drawing pencil which tracks the mouse 
+        // movements.
+        function tool_pencil() {
+            var tool = this;
+            this.started = false;
+
+            // This is called when you start holding down the mouse button.
+            // This starts the pencil drawing.
+            this.mousedown = function (ev) {
+                context.beginPath();
+                context.moveTo(ev._x, ev._y);
+                tool.started = true;
+            };
+
+            // This function is called every time you move the mouse. Obviously, it only 
+            // draws if the tool.started state is set to true (when you are holding down 
+            // the mouse button).
+            this.mousemove = function (ev) {
+                if (tool.started) {
+                    context.lineTo(ev._x, ev._y);
+                    context.lineWidth = 15;
+                    context.stroke();
+
+                }
+            };
+
+            // This is called when you release the mouse button.
+            this.mouseup = function (ev) {
+                if (tool.started) {
+                    tool.mousemove(ev);
+                    tool.started = false;
+                }
+            };
+        }
+
+        // The general-purpose event handler. This function just determines the mouse 
+        // position relative to the canvas element.
+        function ev_canvas(ev) {
+            if (ev.layerX || ev.layerX == 0) { // Firefox
+                ev._x = ev.layerX;
+                ev._y = ev.layerY;
+            } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+                ev._x = ev.offsetX;
+                ev._y = ev.offsetY;
+            }
+
+            // Call the event handler of the tool.
+            var func = tool[ev.type];
+            if (func) {
+                func(ev);
+            }
+        }
+
+        init();
+
+    }, false);
+}
+
+document.getElementById('clear').addEventListener('click', function () {
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }, false);
-canvas.addEventListener("mousedown", function(e) {
-    findxy('down', e)
-}, false);
-canvas.addEventListener("mouseup", function(e) {
-    findxy('up', e)
-}, false);
-canvas.addEventListener("mouseout", function(e) {
-    findxy('out', e)
-}, false);
-}
 
-function draw() {
-ctx.beginPath();
-ctx.moveTo(prevX, prevY);
-ctx.lineTo(currX, currY);
-ctx.strokeStyle = x;
-ctx.lineWidth = y;
-ctx.stroke();
-ctx.closePath();
-}
 
-function erase() {
-var m = confirm("Want to clear");
-if (m) {
-    ctx.clearRect(0, 0, w, h);
-    document.getElementById("canvasimg").style.display = "none";
-}
-}
+function saveDrawing() {
 
-function findxy(res, e) {
-if (res == 'down') {
-    prevX = currX;
-    prevY = currY;
-    currX = e.clientX - canvas.offsetLeft - 235;
-    currY = e.clientY - canvas.offsetTop - 28;
+    var img = canvas.toDataURL("images/png");
+    console.log(img);
 
-    flag = true;
-    dot_flag = true;
-    if (dot_flag) {
-        ctx.beginPath();
-        ctx.fillStyle = x;
-        ctx.fillRect(currX, currY, 2, 2);
-        ctx.closePath();
-        dot_flag = false;
-    }
-}
-if (res == 'up' || res == "out") {
-    flag = false;
-}
-if (res == 'move') {
-    if (flag) {
-        prevX = currX;
-        prevY = currY;
-        currX = e.clientX - canvas.offsetLeft - 235;
-        currY = e.clientY - canvas.offsetTop - 28;
-        draw();
-    }
-}
+    $.ajax({
+        url: '/upload',
+        method: 'POST',
+        data: img,
+        success: function(res){        
+            console.log(res);
+            
+            
+        },error: function(err){ 
+            console.log(err);
+        }
+    });    
 }
