@@ -151,6 +151,7 @@ function saveDrawing() {
     var img = canvas.toDataURL("images/png");
     console.log(img);
 
+
     $.ajax({
         url: '/upload',
         method: 'POST',
