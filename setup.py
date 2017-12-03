@@ -1,3 +1,8 @@
+# Used for setting up the application for initial use
+# Author: Dillon Ward (Dillonward2017@gmail.com)
+# Date: 01/12/2017
+
+# allows for the creation of folders and execution of commands
 import os
 
 # checks to see if a directory already exists
@@ -13,4 +18,6 @@ os.system('clear')
 
 # launches the application
 print("Running the Application")
+
+# run the application
 os.system('py server.py')

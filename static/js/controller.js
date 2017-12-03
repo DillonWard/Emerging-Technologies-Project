@@ -41,11 +41,6 @@ function openTab(tabName, elmnt, color) {
     elmnt.style.backgroundColor = color;
 }
 
-
-// context = canvas.fillRect(255,255,255)
-
-
-// Get the element with id="defaultOpen" and click on it - (3)
 document.getElementById("defaultOpen").click();
 
 // Function for creating a canvas and allowing the user to draw/erase - (3)
@@ -177,14 +172,16 @@ function saveDrawing() {
 
 // function saveImage() {
 
-//     var img = document.getElementById("img").getAttribute("src");
-//     console.log(img);
+//     var image = $('img#img')[0];   
+//     var imageSrc = image.src;
+        
+//     console.log(imageSrc);
 
 
 //     // $.ajax({
 //     //     url: '/upload',
 //     //     method: 'POST',
-//     //     data: img,
+//     //     data: img.getAttribute(""),
 //     //     success: function (res) {
 //     //         console.log(res);
 //     //     }, error: function (err) {
