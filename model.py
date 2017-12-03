@@ -1,5 +1,6 @@
 # (1) Adapted from: https://keras.io/datasets/#mnist-database-of-handwritten-digits
 # (2) Adapted from: https://datascience.stackexchange.com/questions/11704/reshaping-of-data-for-deep-learning-using-keras
+# (3) Adapted from: https://github.com/DillonWard/Tensorflow-Worksheet/blob/master/Tensorflow-Worksheet.ipynb
 
 # Neural network where the model for predictions will be trained and tested
 # the model will be trained using the MNIST dataset and will try to recognize hand writting
@@ -22,10 +23,26 @@ from keras.datasets import mnist
 # y_train, y_test: uint8 array of digit labels (integers in range 0-9) with shape (num_samples,)
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-# (10000, 28, 28) (60000, 28, 28) (10000,) (60000,)
-# print(x_test.shape, x_train.shape, y_test.shape, y_train.shape)
+# (60000, 28, 28) (10000, 28, 28) (60000,) (10000,)
+# print( x_train.shape, x_test.shape, y_train.shape, y_test.shape)
 
 # the datasets are reshaped so that it can be fed into the model
 # the reshape takes in the number of images and the size of the images - (2)
-x_train = x_train.reshape(x_train.shape[0], 1, 28, 28).astype('float32')
-x_test = x_test.reshape(x_test.shape[0], 1,  28, 28).astype('float32')
+# the images are then converted to floats
+# ((x_train.shape[0] = 60000), (x_train.shape[1], x_train.shape[2] = 28, 28))
+x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2]).astype('float32')
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2]).astype('float32')
+
+# currently, depending on the image, the input is 0 - 255
+# 0 - 255 is taken from the pixels in the picture
+# scale down the size of the pixels to be either 0 or 1 (true or false, there is or is not a pixel)
+x_train = x_train/255
+x_test = x_test/255
+
+# the y or 'output' will be stored categorically
+# they are encoded and stored as binary categorical variables - (3)
+y_train = kr.utils.to_categorical(y_train)
+y_test = kr.utils.to_categorical(y_test)
+
+# create a model which will take in a list of layers or a 'linear stack of layers' - (3)
+model = kr.models.Sequential()
