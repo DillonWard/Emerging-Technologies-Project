@@ -10,7 +10,7 @@
 import flask
 
 # takes in requests from the web application
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 # import re or 'regular expressions' for filtering text
 # import base64 for encoding images to extract binary data
@@ -66,9 +66,7 @@ def uploadImage():
 
     new_predict = np.ndarray.flatten(np.array(img_bytes)).reshape(1, 28, 28).astype('float32')
     new_predict = new_predict / 255
-    newPredict(new_predict)
-
-
+    pred = newPredict(new_predict)
 
     # Used for testing to see the output of the image being converted
     # for i in img_bytes:
@@ -81,19 +79,20 @@ def uploadImage():
     #     print()
     
     # returns 'Uploaded' whenever this route is used
-    return 'Uploaded'
+    return pred
 
 def newPredict(f):
 
     # the model that was saved previously is loaded in
     model = kr.models.load_model("./data/prediction_model.h5")
-    prediction = model.predict(f)
-    response = np.array_str(np.argmax(prediction))
-    print(response)
-
-
     
+    # make a prediction with the model
+    prediction = model.predict(f)
+
+    # Return a string representation of the data in an array
+    response = np.array_str(np.argmax(prediction))
     return response
+
 
 if __name__ == '__main__':
     app.run() # runs the application

@@ -3,45 +3,45 @@
 // (3) Adapted from - https://dev.opera.com/articles/html5-canvas-painting/example-2.html
 
 // Function for selecting and uploading a file to the web page - (1)
-function uploadImage(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+// function uploadImage(input) {
+//     if (input.files && input.files[0]) {
+//         var reader = new FileReader();
 
-        reader.onload = function (e) {
-            $('#img')
-                .attr('src', e.target.result)
-                .width(150)
-                .height(200);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-    // saveImage();
-}
+//         reader.onload = function (e) {
+//             $('#img')
+//                 .attr('src', e.target.result)
+//                 .width(150)
+//                 .height(200);
+//         };
+//         reader.readAsDataURL(input.files[0]);
+//     }
+//     // saveImage();
+// }
 
 
 // Function for tab views (2)
-function openTab(tabName, elmnt, color) {
-    // Hide all elements with class="tabcontent" by default */
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
+// function openTab(tabName, elmnt, color) {
+//     // Hide all elements with class="tabcontent" by default */
+//     var i, tabcontent, tablinks;
+//     tabcontent = document.getElementsByClassName("tabcontent");
+//     for (i = 0; i < tabcontent.length; i++) {
+//         tabcontent[i].style.display = "none";
+//     }
 
-    // Remove the background color of all tablinks/buttons
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-    }
+//     // Remove the background color of all tablinks/buttons
+//     tablinks = document.getElementsByClassName("tablink");
+//     for (i = 0; i < tablinks.length; i++) {
+//         tablinks[i].style.backgroundColor = "";
+//     }
 
-    // Show the specific tab content
-    document.getElementById(tabName).style.display = "block";
+//     // Show the specific tab content
+//     document.getElementById(tabName).style.display = "block";
 
-    // Add the specific color to the button used to open the tab content
-    elmnt.style.backgroundColor = color;
-}
+//     // Add the specific color to the button used to open the tab content
+//     elmnt.style.backgroundColor = color;
+// }
 
-document.getElementById("defaultOpen").click();
+// document.getElementById("defaultOpen").click();
 
 // Function for creating a canvas and allowing the user to draw/erase - (3)
 if (window.addEventListener) {
@@ -56,7 +56,7 @@ if (window.addEventListener) {
             canvas = document.getElementById('imageView');
             context = canvas.getContext('2d');
             context.fillStyle="#FFFFFF";
-            context.fillRect(0, 0, 320, 200)
+            context.fillRect(0, 0, 400, 300)
 
 
             if (!canvas) {
@@ -147,7 +147,7 @@ if (window.addEventListener) {
 
 document.getElementById('clear').addEventListener('click', function () {
     context.fillStyle="#FFFFFF";
-    context.fillRect(0, 0, 320, 200)
+    context.fillRect(0, 0, 400, 300)
 
     
 }, false);
@@ -155,8 +155,6 @@ document.getElementById('clear').addEventListener('click', function () {
 function saveDrawing() {
 
     var img = canvas.toDataURL("images/png");
-    console.log(img);
-
 
     $.ajax({
         url: '/upload',
@@ -164,6 +162,8 @@ function saveDrawing() {
         data: img,
         success: function (res) {
             console.log(res);
+            $('#prediction').text( res);
+
         }, error: function (err) {
             console.log(err);
         }

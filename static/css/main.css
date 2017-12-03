@@ -1,4 +1,4 @@
-div#input-gui {
+/* div#input-gui {
     height: 50%;
     float: left;
     width: 60%; 
@@ -7,26 +7,31 @@ div#input-gui {
 }
   
 div#output-gui {
-    height: 50%;
+    height: 200px;
     text-align: center;
     border-left: 2px solid silver;
     float: right;
     width: 40%;
-    align-content: center;
+    margin-bottom: 20px;
 }  
+ */
+/* div#upload.tabcontent{
+    height: 200px;
+    color: black;
+} */
 
-div#upload.tabcontent{
+div#conv{
+    margin-top: -5%;
+    margin-left:40%;
+}
+/* div#draw.tabcontent{
     height: 200px;
     color: black;
-}
-div#draw.tabcontent{
-    height: 200px;
-    color: black;
-}
+} */
 
 
 /* Style the tab buttons */
-.tablink {
+/* .tablink {
     background-color: #555;
     color: white;
     float: left;
@@ -37,15 +42,15 @@ div#draw.tabcontent{
     font-size: 17px;
     width: 25%;
 }
-
-#draw-btn.tablink{
+ */
+/* #draw-btn.tablink{
     background-color: #777777;
 }
 
 /* Change background color of buttons on hover */
-.tablink:hover {
+/* .tablink:hover {
     background-color: #777;
-}
+} */
 
 /* Set default styles for tab content */
 .tabcontent {
@@ -54,9 +59,9 @@ div#draw.tabcontent{
     text-align: center;
 }
 
-/* Style each tab content individually */ 
+/* Style each tab content individually 
 #draw {background-color:#F8F9FA;}
-#upload {background-color:#F8F9FA;}
+#upload {background-color:#F8F9FA;} */
 
 #imageView { 
     border: 1px solid #000; 
