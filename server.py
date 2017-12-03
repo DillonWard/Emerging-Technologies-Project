@@ -68,17 +68,18 @@ def uploadImage():
     new_predict = new_predict / 255
     pred = newPredict(new_predict)
 
-    # Used for testing to see the output of the image being converted
-    # for i in img_bytes:
-    #     for j in i:
-    #         if (j <= 127):
-    #             print('.', end='')
+    '''
+        # Used for testing to see the output of the image being converted
+        for i in img_bytes:
+            for j in i:
+                if (j <= 127):
+                    print('.', end='')
 
-    #         else:
-    #             print ('#', end='')
-    #     print()
-    
-    # returns 'Uploaded' whenever this route is used
+                else:
+                    print ('#', end='')
+            print() 
+    '''
+    # returns the predicted number to the webapp
     return pred
 
 def newPredict(f):
