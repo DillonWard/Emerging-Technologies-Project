@@ -174,6 +174,19 @@ def newPredict(f):
     return response
 ```
 
+### [Model](https://raw.githubusercontent.com/DillonWard/Emerging-Technologies-Project/master/model.py)
+The `model.py` is where we create our neural network and train it with the MNIST Dataset. The model will read in the dataset and train the model by feeding in the images after they are converted and the predictions are made. Finally, our model is saved for later use.
+
+#### Imports
+`from keras.datasets`  the `mnist` dataset will be imported. The datasets will be stored inside arrays using `numpy` and keras will be imported to use some of the functionalities it provides.
+
+```
+import numpy as np
+import keras as kr
+from keras.datasets import mnist
+```
+
+
 
 ## References
 * [Wikipedia - Tensorflow](https://en.wikipedia.org/wiki/TensorFlow)
@@ -182,3 +195,4 @@ def newPredict(f):
 * [Lynda - What is Keras?](https://www.lynda.com/Google-TensorFlow-tutorials/What-Keras/601801/642171-4.html)
 * [Anaconda](https://anaconda.org/)
 * [Anaconda Installation](https://anaconda.org/)
+* [Introduction to Flask](http://pymbook.readthedocs.io/en/latest/flask.html)
