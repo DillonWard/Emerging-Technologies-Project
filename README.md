@@ -92,6 +92,7 @@ pip install flask
 3. The image containing the digit will be sent to the server
 3. Send a response to the user with the digit contained in the image
 
+![alt text](https://github.com/DillonWard/Emerging-Technologies-Project/blob/master/images/readme-img-01.png?raw=true)
 # Architecture
 ### [Setup](https://raw.githubusercontent.com/DillonWard/Emerging-Technologies-Project/master/setup.py)
 
@@ -186,6 +187,52 @@ import keras as kr
 from keras.datasets import mnist
 ```
 
+#### Hand-Recognition Model
+First, the MNIST Dataset is loaded in and stored for later usage. The format or `shape` of the dataset is as follows:
+```
+(60000, 28, 28) (10000, 28, 28) (60000,) (10000,)
+x_train.shape, x_test.shape, y_train.shape, y_test.shape
+```
+Then, the input test/train sets are reshaped and converted to floats. The number of images and the size of the images are taken in and reshaped to 28 * 28. 
+After the images are reshaped, they are divided by 255. This is done because the numbers that the sets contain can be anywhere between 0 to 255, they are divided so they are set to either 1 or 0.
+
+Next, the output training and testing sets are encoded and stored as binary categorical variables. 
+
+Next, the Model is created - the model will stored a list of layers, or a linear stack of layers that will be used for manipulating the data taken in from the images.
+
+Then the layers from Keras are added to the model. 
+
+Finally, the model is configured for training and fit using the training data.
+
+```
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+
+x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2]).astype('float32')
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2]).astype('float32')
+
+x_train = x_train/255
+x_test = x_test/255
+
+y_train = kr.utils.np_utils.to_categorical(y_train)
+y_test = kr.utils.np_utils.to_categorical(y_test)
+
+model = kr.models.Sequential()
+
+model.add(kr.layers.Dense(512, input_shape=(x_train.shape[1], x_train.shape[2])))
+model.add(kr.layers.Flatten())
+model.add(kr.layers.Activation('relu'))
+model.add(kr.layers.Dropout(0.2))
+model.add(kr.layers.Dense(10))
+model.add(kr.layers.Activation('softmax'))
+
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+
+model.fit(x_train, y_train, batch_size = 128, epochs = 20, verbose = 1)
+loss, accuracy = model.evaluate(x_train, y_train, verbose=1)
+
+prediction = np.around(model.predict(np.expand_dims(x_test[0], axis=0))).astype(np.int)[0]
+```
 
 
 ## References
