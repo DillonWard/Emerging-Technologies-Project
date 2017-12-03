@@ -10,7 +10,7 @@
 import flask
 
 # takes in requests from the web application
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 # import re or 'regular expressions' for filtering text
 # import base64 for encoding images to extract binary data
