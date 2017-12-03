@@ -10,6 +10,10 @@ import os
 if not os.path.exists('./images'):
     os.mkdir('./images') 
 
+if not os.path.exists('./data'):
+    os.mkdir('./data') 
+
+
 # runs the command to install node_modules
 print("Installing Node Modules")
 os.system('npm install')

@@ -23,6 +23,13 @@ import numpy as np
 # import 'imresize' for resizing and returning images
 from scipy.misc import imread, imresize
 
+# import keras to load the previously generated model
+import keras as kr
+
+# supress warnings from tensorflow
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+
 app = Flask(__name__)
 
 # sets up the 'home' route 
@@ -32,6 +39,7 @@ def home():
     return app.send_static_file('index.html')
 
 # route for POSTing images to the server
+# image is uploaded and converted here
 @app.route('/upload', methods=['POST'])
 def uploadImage():
     # data is read in from the request made to the server 
@@ -56,6 +64,12 @@ def uploadImage():
     # resizes the image bytes size to 28 rows and cols - (3)
     img_bytes = imresize(img_bytes, (28,28))
 
+    new_predict = np.ndarray.flatten(np.array(img_bytes)).reshape(1, 28, 28).astype('float32')
+    new_predict = new_predict / 255
+    newPredict(new_predict)
+
+
+
     # Used for testing to see the output of the image being converted
     # for i in img_bytes:
     #     for j in i:
@@ -68,6 +82,18 @@ def uploadImage():
     
     # returns 'Uploaded' whenever this route is used
     return 'Uploaded'
+
+def newPredict(f):
+
+    # the model that was saved previously is loaded in
+    model = kr.models.load_model("./data/prediction_model.h5")
+    prediction = model.predict(f)
+    response = np.array_str(np.argmax(prediction))
+    print(response)
+
+
+    
+    return response
 
 if __name__ == '__main__':
     app.run() # runs the application

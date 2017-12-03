@@ -19,6 +19,10 @@ import keras as kr
 # these images will be fed into our model to train it
 from keras.datasets import mnist
 
+# supress warnings from tensorflow
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+
 # loads in the MNIST Dataset for training and testing the model - (1)
 # 2 tuples for the model will be returned
 # x_train, x_test: uint8 array of grayscale image data with shape (num_samples, 28, 28)
@@ -75,7 +79,7 @@ model.add(kr.layers.Activation('softmax'))
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Fit the model using our training data. - (3)
-model.fit(x_train, y_train, batch_size = 128, epochs = 10, verbose = 1)
+model.fit(x_train, y_train, batch_size = 128, epochs = 20, verbose = 1)
 
 # Evaluate the model using the test data set. - (3)
 loss, accuracy = model.evaluate(x_train, y_train, verbose=1)
@@ -83,3 +87,5 @@ print("\n\nLoss: %6.4f\tAccuracy: %6.4f" % (loss, accuracy))
 
 # Predict the number.
 prediction = np.around(model.predict(np.expand_dims(x_test[0], axis=0))).astype(np.int)[0]
+# Save the model to a file for later use.
+# model.save("./data/prediction_model.h5")
